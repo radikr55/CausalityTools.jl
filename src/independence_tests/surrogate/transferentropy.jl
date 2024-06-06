@@ -4,7 +4,7 @@ using TimeseriesSurrogates: surrogenerator
 
 const EmbeddingTypes = Union{EmbeddingTE, OptimiseTraditional}
 function marginals_and_surrogenerator(emb::EmbeddingTE, surrogate::Surrogate, x::AbstractVector...; rng)
-    if emb.dS > 1 && surrogate ∉ [RandomShuffle]
+    if emb.dS > 1 && !isa(surrogate, RandomShuffle)
         throw(ArgumentError("Dimension of source embedding must be 1 to be applicable with surrogate methods"))
     end
     S, T, T⁺, C = individual_marginals_te(emb, x...)
